@@ -2,10 +2,10 @@
   <div class="t-home">
     <h1 class="t-home__title t-title">Test task Volkov E.V</h1>
     <div class="t-home__wrapper">
-      <router-link to="/users">
+      <router-link to="/task-1">
         <button class="t-home__btn t-btn">Task #1</button>
       </router-link>
-      <router-link to="/">
+      <router-link to="/task-2">
         <button class="t-home__btn t-btn">Task #2</button>
       </router-link>
       <router-link to="/">

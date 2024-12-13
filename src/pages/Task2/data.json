@@ -1,0 +1,146 @@
+[
+  {
+    "id": 1,
+    "title": "Bistro Gourmet",
+    "address": "123 Main Street, Cityville",
+    "workTime": "8:00 - 22:00",
+    "img": "1.png",
+    "menu": [
+      {
+        "title": "Grilled Salmon",
+        "price": 12.99,
+        "sale": false
+      },
+      {
+        "title": "Caesar Salad",
+        "price": 7.49,
+        "sale": true
+      },
+      {
+        "title": "Chocolate Lava Cake",
+        "price": 6.25,
+        "sale": false
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Urban Eats",
+    "address": "456 Elm Street, Metropolis",
+    "workTime": "10:00 - 21:00",
+    "img": "2.png",
+    "menu": [
+      {
+        "title": "BBQ Ribs",
+        "price": 15.99,
+        "sale": false
+      },
+      {
+        "title": "Mashed Potatoes",
+        "price": 4.99,
+        "sale": true
+      },
+      {
+        "title": "Apple Pie",
+        "price": 5.5,
+        "sale": false
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Seaside Diner",
+    "address": "789 Ocean Drive, Beachtown",
+    "workTime": "9:00 - 23:00",
+    "img": "3.png",
+    "menu": [
+      {
+        "title": "Fish Tacos",
+        "price": 9.99,
+        "sale": false
+      },
+      {
+        "title": "Clam Chowder",
+        "price": 6.75,
+        "sale": true
+      },
+      {
+        "title": "Key Lime Pie",
+        "price": 4.99,
+        "sale": false
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Mountain Grill",
+    "address": "101 Hilltop Road, Summitville",
+    "workTime": "7:00 - 20:00",
+    "img": "4.png",
+    "menu": [
+      {
+        "title": "Steak",
+        "price": 18.99,
+        "sale": false
+      },
+      {
+        "title": "Garlic Bread",
+        "price": 3.99,
+        "sale": true
+      },
+      {
+        "title": "Cheesecake",
+        "price": 5.99,
+        "sale": false
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Cafe Bella",
+    "address": "555 Flower Lane, Bloomfield",
+    "workTime": "8:00 - 19:00",
+    "img": "5.png",
+    "menu": [
+      {
+        "title": "Pasta Carbonara",
+        "price": 11.99,
+        "sale": false
+      },
+      {
+        "title": "Bruschetta",
+        "price": 6.25,
+        "sale": true
+      },
+      {
+        "title": "Tiramisu",
+        "price": 6.99,
+        "sale": false
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Garden Delight",
+    "address": "98 Orchard Avenue, Greenfield",
+    "workTime": "9:00 - 20:00",
+    "img": "6.png",
+    "menu": [
+      {
+        "title": "Veggie Burger",
+        "price": 8.99,
+        "sale": true
+      },
+      {
+        "title": "Sweet Potato Fries",
+        "price": 4.25,
+        "sale": false
+      },
+      {
+        "title": "Fruit Smoothie",
+        "price": 5.49,
+        "sale": true
+      }
+    ]
+  }
+]

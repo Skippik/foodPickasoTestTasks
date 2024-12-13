@@ -1,20 +1,20 @@
 <template>
-  <div class="t-users">
-    <div class="t-users__header">
-      <button @click="goBack" class="t-users__header--btn t-btn">
+  <div class="t-task1">
+    <div class="t-header">
+      <button @click="goBack" class="t-header--btn t-btn">
         <img src="../../assets/icons/back.svg" alt="Go back" class="icon" />
       </button>
 
-      <h1 class="t-users__header--title t-title">Task #1</h1>
+      <h1 class="t-header--title t-title">Task #1</h1>
     </div>
 
-    <div v-if="loading" class="t-loading">
+    <div v-if="state.loading" class="t-loading">
       <div class="t-loading__spinner"></div>
       <p>Loading...</p>
     </div>
 
-    <div v-else class="t-users__wrapper">
-      <div v-for="user in users" :key="user.id" class="t-users__item">
+    <div v-else class="t-task1__wrapper">
+      <div v-for="user in state.users" :key="user.id" class="t-task1__item">
         <h3>{{ user.name }}</h3>
         <p>
           <a :href="'mailto:' + user.email">{{ user.email }}</a>
@@ -34,7 +34,7 @@
 
 <script lang="ts">
 import axios from 'axios';
-import {defineComponent, ref, onMounted} from 'vue';
+import {defineComponent, onMounted, reactive} from 'vue';
 import {useRouter} from 'vue-router';
 
 interface UserType {
@@ -47,28 +47,29 @@ interface UserType {
 }
 
 export default defineComponent({
-  name: 'UsersPage',
+  name: 'Task1Page',
   setup() {
     const router = useRouter();
     //
-    const users = ref<UserType[]>([]);
-    //
-    const loading = ref(true);
+    const state = reactive({
+      users: [] as UserType[],
+      loading: true,
+    });
 
     const goBack = () => {
       router.back();
     };
 
-    const getUsers = async () => {
+    const getUsers = async function () {
       try {
         const resp = await axios.get<UserType[]>(
           'https://jsonplaceholder.typicode.com/users',
         );
-        users.value = resp.data;
+        state.users = resp.data;
       } catch (err) {
         console.error(err);
       } finally {
-        loading.value = false;
+        state.loading = false;
       }
     };
 
@@ -76,7 +77,7 @@ export default defineComponent({
       getUsers();
     });
 
-    return {goBack, users, loading};
+    return {goBack, state};
   },
 });
 </script>
