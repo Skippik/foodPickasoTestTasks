@@ -1,0 +1,44 @@
+.t-task3 {
+  position: relative;
+  overflow: hidden;
+  &__wrapper {
+    width: 1440px;
+    height: 800px;
+    margin: 0 auto;
+    background: linear-gradient(to bottom, #eeecda 0, #f4dfc6 100%);
+  }
+
+  &__header {
+    &--wrapper {
+      display: flex;
+      align-items: center;
+      padding: 22px 0 28px 18px;
+    }
+
+    &--link {
+      font-weight: 900;
+      font-size: 60px;
+      line-height: 60px;
+      text-align: left;
+      color: #000;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    &--icon {
+      margin: 5px 0 0 85px;
+    }
+  }
+
+  &--background {
+    position: absolute;
+    left: 50%;
+    bottom: -50px;
+    width: 100%;
+    transform: translateX(-50%);
+    max-width: 1440px;
+  }
+}

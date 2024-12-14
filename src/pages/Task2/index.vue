@@ -30,7 +30,6 @@
             <div class="t-task2__slider--footer">
               <div
                 class="desc"
-                :class="{sale: menuItem.sale}"
                 v-for="menuItem in item.menu"
                 :id="menuItem.price.toString()">
                 <h1>{{ menuItem.title }}</h1>

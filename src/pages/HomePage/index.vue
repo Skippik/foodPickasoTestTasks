@@ -8,7 +8,7 @@
       <router-link to="/task-2">
         <button class="t-home__btn t-btn">Task #2</button>
       </router-link>
-      <router-link to="/">
+      <router-link to="/task-3">
         <button class="t-home__btn t-btn">Task #3</button>
       </router-link>
     </div>
