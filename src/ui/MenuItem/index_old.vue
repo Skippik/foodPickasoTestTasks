@@ -17,13 +17,11 @@
       v-for="(menuCategory, key) in item.menu"
       :key="key">
       <div v-if="menuCategory.link">
-        <div v-for="menuItem in menuState[key]">
-          <div class="t-task3__slider--footer--info link">
-            <h1 @click="openPopup(key)">
-              {{ menuItem.name }}
-            </h1>
-            <p>{{ menuItem.price.toFixed(2) }}</p>
-          </div>
+        <div class="t-task3__slider--footer--info link">
+          <h1 @click="openPopup(key)">
+            {{ menuState[key]?.name }}
+          </h1>
+          <p>{{ menuState[key]?.price.toFixed(2) }}</p>
         </div>
       </div>
       <div v-else>
@@ -41,7 +39,7 @@
       </div>
       <div class="t-task3__popup--items">
         <div
-          v-for="item in menuState[state.popupCategory]"
+          v-for="item in state.selectedMenuItem"
           :key="item.name"
           class="t-task3__popup--item">
           <label
@@ -76,7 +74,14 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, onMounted, PropType, reactive} from 'vue';
+import {
+  computed,
+  defineComponent,
+  onMounted,
+  PropType,
+  reactive,
+  toRaw,
+} from 'vue';
 import {Restaurant} from '../../types';
 
 interface MenuItem {
@@ -101,13 +106,14 @@ export default defineComponent({
   },
 
   setup(props) {
+    //
     const menuState = reactive<Record<string, MenuItem[]>>({});
+    //
     const state = reactive({
       open: false,
       popupTitle: '',
-      popupCategory: '',
     });
-
+    //
     const menu = props.item.menu;
 
     const initializeMenuState = () => {
@@ -125,50 +131,55 @@ export default defineComponent({
         }
       });
     };
-
+    //
+    const calcTotalPrice = computed(() => {
+      return Object.values(menuState).reduce(
+        (acc, menuItem) => acc + menuItem[0].price,
+        0,
+      );
+    });
+    //
+    const recalculateTotalPrice = () => {
+      const total = Object.values(menuState).reduce(
+        (acc, item) => acc + item.price,
+        0,
+      );
+      closePopup();
+    };
+    //
     const openPopup = (key: string) => {
       const menuData = menu[key as keyof typeof menu];
       state.popupTitle = configPopupTitle[key as keyof typeof configPopupTitle];
-      state.popupCategory = key;
       state.open = true;
       if (menuData.link) {
-        menuState[key] = menuData.data.map(item => ({
+        menuState = menuData.data.map(item => ({
           ...item,
           selected: false,
         }));
       }
     };
-
-    const toggleSelection = (menuItem: MenuItem) => {
+    //
+    const toggleSelection = (menuItem: SelectedMenuItem) => {
       menuItem.selected = !menuItem.selected;
+      const index = menuState.findIndex(item => item.name === menuItem.name);
+
+      if (index !== -1) {
+        const updatedItem = {
+          ...state.selectedMenuItem[index],
+          selected: !state.selectedMenuItem[index].selected,
+        };
+
+        state.selectedMenuItem = state.selectedMenuItem.map((item, idx) =>
+          idx === index ? updatedItem : item,
+        );
+      }
     };
 
+    //
     const closePopup = () => {
       state.open = false;
-      menuState[state.popupCategory]?.forEach(item => {
-        item.selected = false;
-      });
+      state.selectedMenuItem = [];
     };
-
-    const recalculateTotalPrice = () => {
-      const total = menuState[state.popupCategory]?.reduce(
-        (acc, item) => acc + (item.selected ? item.price : 0),
-        0,
-      );
-      console.log('Total Price:', total);
-    };
-
-    const calcTotalPrice = computed(() => {
-      return Object.values(menuState).reduce(
-        (acc, menuItems) =>
-          acc +
-          menuItems.reduce(
-            (itemAcc, item) => (item.selected ? itemAcc + item.price : itemAcc),
-            0,
-          ),
-        0,
-      );
-    });
 
     onMounted(() => {
       initializeMenuState();
