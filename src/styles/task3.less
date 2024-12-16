@@ -1,7 +1,7 @@
 .t-task3 {
-  position: relative;
   overflow: hidden;
   &__wrapper {
+    position: relative;
     width: 1440px;
     height: 800px;
     margin: 0 auto;
@@ -40,5 +40,28 @@
     width: 100%;
     transform: translateX(-50%);
     max-width: 1440px;
+  }
+
+  &__swiper {
+    &--btn-prev,
+    &--btn-next {
+      display: flex;
+      align-items: center;
+      position: absolute;
+      top: 20px;
+      cursor: pointer;
+
+      &.swiper-button-disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+    }
+    &--btn-prev {
+      right: 10px;
+    }
+    &--btn-next {
+      right: 90px;
+      transform: scale(-1);
+    }
   }
 }
