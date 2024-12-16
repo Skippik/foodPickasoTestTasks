@@ -1,15 +1,15 @@
 <template>
-  <div class="t-task2__slider">
+  <div class="t-task3__slider--item">
     <img
-      class="t-task2__slider--img"
+      class="t-task3__slider--img"
       :src="`/images/${item.img}`"
       alt="Restaurant img" />
-    <div class="t-task2__slider--info">
+    <div class="t-task3__slider--info">
       <h3>{{ item.title }}</h3>
       <p>{{ item.address }}</p>
       <p>{{ item.workTime }}</p>
     </div>
-    <div class="t-task2__slider--footer">
+    <div class="t-task3__slider--footer">
       <!-- <div
         class="desc"
         v-for="menuItem in item.menu"

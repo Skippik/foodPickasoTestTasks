@@ -29,7 +29,6 @@
       <swiper
         class="t-slider"
         :slides-per-view="4"
-        :space-between="10"
         :navigation="{
           prevEl: prev,
           nextEl: next,
