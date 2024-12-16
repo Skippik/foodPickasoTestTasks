@@ -10,30 +10,30 @@
       <p>{{ item.workTime }}</p>
     </div>
     <div class="t-task3__slider--footer">
-      <!-- <div
-        class="desc"
-        v-for="menuItem in item.menu"
-        :id="menuItem.price.toString()">
-        <h1>{{ menuItem.title }}</h1>
-        <p>{{ menuItem.price }}</p>
+      <div v-for="itemMenu in item.menu">
+        <div v-if="itemMenu.link">
+          <div>
+            <h1>{{ menuState.name }}</h1>
+            <p>{{ menuState.price }}</p>
+          </div>
+        </div>
+        <div v-else>
+          <h1>{{ itemMenu.data[0].name }}</h1>
+          <p>{{ item.totalPrice }}</p>
+        </div>
       </div>
-      <div class="total-price" v-if="totalPrice.length > 0"> -->
-      <!-- <span
-          >Общая стоимость:
-          {{
-            totalPrice
-              .find(restaurant => restaurant.restaurantId === item.id)
-              ?.totalPrice.toFixed(2)
-          }}</span
-        > -->
-      <!-- </div> -->
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import {defineComponent, PropType} from 'vue';
+import {defineComponent, onMounted, PropType, reactive} from 'vue';
 import {Restaurant} from '../../types';
+
+interface MenuItem {
+  name: string;
+  price: number;
+}
 
 export default defineComponent({
   name: 'MenuItem',
@@ -42,6 +42,33 @@ export default defineComponent({
       type: Object as PropType<Restaurant>,
       required: true,
     },
+  },
+  setup(props) {
+    const menuState = reactive<Record<string, MenuItem>>({});
+
+    //
+    const menu = props.item.menu;
+
+    const initializeMenuState = () => {
+      Object.keys(menu).forEach(key => {
+        const category = menu[key as keyof typeof menu];
+
+        if (category.link && category.data.length > 0) {
+          menuState[key] = {
+            name: category.data[0].name,
+            price: category.data[0].price,
+          };
+        }
+      });
+    };
+
+    onMounted(() => {
+      initializeMenuState();
+    });
+
+    return {
+      menuState,
+    };
   },
 });
 </script>

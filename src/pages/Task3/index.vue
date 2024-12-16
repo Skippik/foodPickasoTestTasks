@@ -37,13 +37,13 @@
           <MenuItem :item="item" />
         </swiper-slide>
       </swiper>
-      <div ref="prev" class="t-task3__swiper--btn-prev">
+      <div ref="next" class="t-task3__swiper--btn-next">
         <img
           src="../../assets/icons/arrow.svg"
           alt="Go back"
           class="swiper-button-prev-icon" />
       </div>
-      <div ref="next" class="t-task3__swiper--btn-next">
+      <div ref="prev" class="t-task3__swiper--btn-prev">
         <img
           src="../../assets/icons/arrow.svg"
           alt="Go back"
