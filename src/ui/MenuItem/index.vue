@@ -17,12 +17,21 @@
       v-for="(menuCategory, key) in item.menu"
       :key="key">
       <div v-if="menuCategory.link">
-        <div v-for="menuItem in menuState[key]">
+        <div v-if="menuState[key]?.some(item => item.selected)">
+          <div v-for="menuItem in menuState[key]">
+            <div
+              v-if="menuItem.selected"
+              class="t-task3__slider--footer--info link">
+              <h1 @click="openPopup(key)">
+                {{ menuItem.name }}
+              </h1>
+              <p>{{ menuItem.price.toFixed(2) }}</p>
+            </div>
+          </div>
+        </div>
+        <div v-else>
           <div class="t-task3__slider--footer--info link">
-            <h1 @click="openPopup(key)">
-              {{ menuItem.name }}
-            </h1>
-            <p>{{ menuItem.price.toFixed(2) }}</p>
+            <h1 @click="openPopup(key)">Выбрать блюда</h1>
           </div>
         </div>
       </div>
@@ -76,7 +85,14 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, onMounted, PropType, reactive} from 'vue';
+import {
+  computed,
+  defineComponent,
+  onMounted,
+  PropType,
+  reactive,
+  toRaw,
+} from 'vue';
 import {Restaurant} from '../../types';
 
 interface MenuItem {
@@ -101,11 +117,14 @@ export default defineComponent({
   },
 
   setup(props) {
+    //
     const menuState = reactive<Record<string, MenuItem[]>>({});
+    //
     const state = reactive({
       open: false,
       popupTitle: '',
       popupCategory: '',
+      totalPriceCat: 0,
     });
 
     const menu = props.item.menu;
@@ -115,47 +134,48 @@ export default defineComponent({
         const category = menu[key as keyof typeof menu];
 
         if (category.link && category.data.length > 0) {
-          menuState[key] = [
-            {
-              name: category.data[0].name,
-              price: category.data[0].price,
-              selected: false,
-            },
-          ];
+          menuState[key] = category.data.map((item, index) => ({
+            name: item.name,
+            price: item.price,
+            selected: index === 0, // Только первый элемент выбран
+          }));
         }
       });
+      recalculateTotalPrice();
     };
 
     const openPopup = (key: string) => {
-      const menuData = menu[key as keyof typeof menu];
       state.popupTitle = configPopupTitle[key as keyof typeof configPopupTitle];
       state.popupCategory = key;
       state.open = true;
-      if (menuData.link) {
-        menuState[key] = menuData.data.map(item => ({
-          ...item,
-          selected: false,
-        }));
-      }
     };
 
     const toggleSelection = (menuItem: MenuItem) => {
-      menuItem.selected = !menuItem.selected;
+      const category = menuState[state.popupCategory];
+      const itemIndex = category.findIndex(item => item.name === menuItem.name);
+
+      if (itemIndex !== -1) {
+        const updatedItem = {
+          ...menuItem,
+          selected: !menuItem.selected,
+        };
+
+        menuState[state.popupCategory].map((item, idx) =>
+          idx === itemIndex ? updatedItem : item,
+        );
+      }
     };
 
     const closePopup = () => {
       state.open = false;
-      menuState[state.popupCategory]?.forEach(item => {
-        item.selected = false;
-      });
     };
 
     const recalculateTotalPrice = () => {
-      const total = menuState[state.popupCategory]?.reduce(
+      state.totalPriceCat = menuState[state.popupCategory]?.reduce(
         (acc, item) => acc + (item.selected ? item.price : 0),
         0,
       );
-      console.log('Total Price:', total);
+      state.open = false;
     };
 
     const calcTotalPrice = computed(() => {
