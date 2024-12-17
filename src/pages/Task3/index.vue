@@ -32,6 +32,24 @@
         :navigation="{
           prevEl: prev,
           nextEl: next,
+        }"
+        :breakpoints="{
+          360: {
+            slidesPerView: 1,
+          },
+          640: {
+            slidesPerView: 1,
+          },
+          768: {
+            slidesPerView: 2,
+          },
+          1024: {
+            slidesPerView: 3,
+            // spaceBetween: 10,
+          },
+          1280: {
+            slidesPerView: 4,
+          },
         }">
         <swiper-slide v-for="item in state.restaurants" :key="item.id">
           <MenuItem :item="item" />

@@ -1,3 +1,5 @@
+@import './index.less';
+
 .t-task3 {
   overflow: hidden;
   &__wrapper {
@@ -6,6 +8,26 @@
     height: '100%';
     margin: 0 auto;
     background: linear-gradient(to bottom, #eeecda 0, #f4dfc6 100%);
+
+    @media @l {
+      max-width: 1240px;
+    }
+
+    @media @m {
+      max-width: 960px;
+    }
+
+    @media @sm {
+      max-width: 768px;
+    }
+
+    @media @s {
+      max-width: 640px;
+    }
+
+    @media @xs {
+      max-width: 360px;
+    }
   }
 
   &__header {
@@ -13,6 +35,11 @@
       display: flex;
       align-items: center;
       padding: 22px 0 28px 18px;
+
+      @media @xs {
+        flex-direction: column;
+        align-items: center;
+      }
     }
 
     &--link {
@@ -23,6 +50,18 @@
       color: #000;
       text-decoration: none;
 
+      @media @m {
+        font-size: 40px;
+      }
+
+      @media @sm {
+        font-size: 32px;
+      }
+
+      @media @xs {
+        font-size: 24px;
+      }
+
       &:hover {
         text-decoration: underline;
       }
@@ -30,6 +69,10 @@
 
     &--icon {
       margin: 5px 0 0 85px;
+
+      @media @xs {
+        margin: 0;
+      }
     }
   }
 
@@ -50,6 +93,10 @@
       position: absolute;
       top: 20px;
       cursor: pointer;
+
+      @media @sm {
+        display: none;
+      }
 
       &.swiper-button-disabled {
         opacity: 0.5;
@@ -226,6 +273,7 @@
 
     &.open {
       height: 100%;
+      // max-height: fit-content;
       width: 100%;
       opacity: 1;
       transform: translateY(0);
@@ -269,8 +317,8 @@
         height: 25px;
 
         & .close-icon {
-          font-size: 24px; /* Размер крести */
-          color: #000; /* Цвет крести */
+          font-size: 24px;
+          color: #000;
           font-weight: bold;
           line-height: 1;
         }
