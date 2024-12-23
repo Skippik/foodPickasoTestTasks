@@ -1,19 +1,19 @@
 <template>
-  <div class="t-task3__slider--item">
-    <a href="" class="t-task3__slider--link">
+  <div class="t-task3-slider__item">
+    <a href="" class="t-task3-slider__link">
       <img
-        class="t-task3__slider--link--img"
+        class="t-task3-slider__img"
         :src="`/images/${item.img}`"
         alt="Restaurant img" />
       <i></i>
     </a>
-    <div class="t-task3__slider--info">
-      <h3>{{ item.title }}</h3>
-      <p>{{ item.address }}</p>
-      <p>{{ item.workTime }}</p>
+    <div class="task3-slider__info">
+      <h3 class="task3-slider__title">{{ item.title }}</h3>
+      <p class="task3-slider__address">{{ item.address }}</p>
+      <p class="task3-slider__work-time">{{ item.workTime }}</p>
     </div>
     <div
-      class="t-task3__slider--footer"
+      class="t-task3-slider__footer"
       v-for="(menuCategory, key) in item.menu"
       :key="key">
       <div v-if="menuCategory.link">

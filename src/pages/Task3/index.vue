@@ -1,15 +1,18 @@
 <template>
   <div class="t-task3">
-    <div class="t-header">
-      <button @click="goBack" class="t-header--btn t-btn">
-        <img src="../../assets/icons/back.svg" alt="Go back" class="icon" />
+    <div class="t-task3__header">
+      <button @click="goBack" class="t-task3__header-btn t-btn">
+        <img
+          src="../../assets/icons/back.svg"
+          alt="Go back"
+          class="t-task3__header-icon" />
       </button>
-      <h1 class="t-header--title t-title">Task #3</h1>
+      <h1 class="t-task3__header-title t-title">Task #3</h1>
     </div>
     <div class="t-task3__wrapper">
-      <div class="t-task3__header--wrapper">
+      <div class="t-task3__info">
         <a
-          class="t-task3__header--link"
+          class="t-task3__info-link"
           href="https://clever.by/vitebsk/dostavka/"
           target="_blank"
           rel="noopener noreferrer"
@@ -18,16 +21,16 @@
 
         <img
           src="../../assets/icons/clever.svg"
-          class="t-task3__header--icon"
+          class="t-task3__info-icon"
           alt="header-icon" />
       </div>
       <img
         src="../../assets/icons/background.svg"
-        class="t-task3--background"
+        class="t-task3__background"
         alt="header-icon" />
 
       <swiper
-        class="t-slider"
+        class="t-task3__slider"
         :slides-per-view="4"
         :navigation="{
           prevEl: prev,
@@ -55,17 +58,17 @@
           <MenuItem :item="item" />
         </swiper-slide>
       </swiper>
-      <div ref="prev" class="t-task3__swiper--btn-prev">
+      <div ref="prev" class="t-task3__slider-btn t-task3__slider-btn--prev">
         <img
           src="../../assets/icons/arrow.svg"
           alt="Go back"
-          class="swiper-button-prev-icon" />
+          class="t-task3__slider-btn-icon" />
       </div>
-      <div ref="next" class="t-task3__swiper--btn-next">
+      <div ref="next" class="t-task3__slider-btn t-task3__slider-btn--next">
         <img
           src="../../assets/icons/arrow.svg"
           alt="Go back"
-          class="swiper-button-prev-icon" />
+          class="t-task3__slider-btn-icon" />
       </div>
     </div>
   </div>
