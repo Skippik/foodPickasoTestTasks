@@ -1,74 +1,65 @@
 @import './index.less';
 
+// Переменные для цветов и размеров
+@color-primary: #eeecda;
+@color-secondary: #f4dfc6;
+@color-text: #000;
+@color-hover: red;
+@font-size-large: 60px;
+@font-size-medium: 40px;
+@font-size-small: 24px;
+
 .t-task3 {
   overflow: hidden;
+
   &__wrapper {
     position: relative;
-    width: 1440px;
-    height: '100%';
+    max-width: 1440px;
+    width: 100%;
     margin: 0 auto;
-    background: linear-gradient(to bottom, #eeecda 0, #f4dfc6 100%);
+    padding: 0 20px;
+    background: linear-gradient(
+      to bottom,
+      @color-primary 0%,
+      @color-secondary 100%
+    );
 
     @media @l {
       max-width: 1240px;
     }
-
     @media @m {
       max-width: 960px;
     }
-
     @media @sm {
       max-width: 768px;
     }
-
     @media @s {
       max-width: 640px;
     }
-
     @media @xs {
       max-width: 360px;
     }
   }
 
-  &__header {
-    &--wrapper {
-      display: flex;
-      align-items: center;
-      padding: 22px 0 28px 18px;
+  &__info {
+    display: flex;
+    align-items: center;
 
-      @media @xs {
-        flex-direction: column;
-        align-items: center;
-      }
-    }
-
-    &--link {
+    &-link {
       font-weight: 900;
-      font-size: 60px;
-      line-height: 60px;
-      text-align: left;
-      color: #000;
+      font-size: clamp(1.5rem, 4vw, @font-size-large);
+      color: @color-text;
       text-decoration: none;
-
-      @media @m {
-        font-size: 40px;
-      }
-
-      @media @sm {
-        font-size: 32px;
-      }
-
-      @media @xs {
-        font-size: 24px;
-      }
+      transition: color 0.3s ease, text-decoration 0.3s ease;
 
       &:hover {
         text-decoration: underline;
+        color: @color-hover;
       }
     }
 
-    &--icon {
-      margin: 5px 0 0 85px;
+    &-icon {
+      margin-left: 20px;
 
       @media @xs {
         margin: 0;
@@ -76,7 +67,7 @@
     }
   }
 
-  &--background {
+  &__background {
     position: absolute;
     left: 50%;
     bottom: -50px;
@@ -85,111 +76,97 @@
     max-width: 1440px;
   }
 
-  &__swiper {
-    &--btn-prev,
-    &--btn-next {
-      display: flex;
-      align-items: center;
-      position: absolute;
-      top: 20px;
-      cursor: pointer;
+  &-slider {
+    position: relative;
 
-      @media @sm {
-        display: none;
-      }
-
-      &.swiper-button-disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-      }
-    }
-    &--btn-prev {
-      right: 10px;
-    }
-    &--btn-next {
-      right: 90px;
-      transform: scale(-1);
-    }
-  }
-
-  &__slider {
-    &--link {
-      overflow: hidden;
-      position: relative;
-
-      &--img {
-        width: 100%;
-        height: auto;
-        display: block;
-        position: relative; /* Для правильного наложения ::before */
-      }
-
-      i {
+    &-btn {
+      &.prev,
+      &.next {
+        display: flex;
+        align-items: center;
         position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(
-            to bottom,
-            rgba(100, 61, 15, 1) 0,
-            rgba(100, 61, 15, 0) 100%
-          )
-          repeat scroll 0 0;
-        width: 100%;
-        height: 100%;
-        opacity: 0.4;
-        z-index: 1;
-      }
-    }
+        top: 20px;
+        cursor: pointer;
 
-    &--item {
-      position: relative;
-      height: auto;
-      transition: all linear 0.1s;
-      padding-bottom: 80px;
+        @media @sm {
+          display: none;
+        }
 
-      &:hover {
-        .t-task3__slider--footer--info.total-price {
-          p {
-            color: white;
-            background-color: red;
-            padding: 5px;
-            transition: all linear 0.1s;
-          }
+        &.swiper-button-disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
         }
       }
+      &.prev {
+        right: 10px;
+      }
+      &.next {
+        right: 90px;
+        transform: scale(-1);
+      }
     }
-    &--info {
+
+    &__info {
       position: absolute;
       top: 10px;
       left: 10px;
       z-index: 2;
     }
 
-    &--footer {
-      z-index: 2;
+    &__item {
       position: relative;
-      margin-top: 15px;
-      &--info {
+      padding-bottom: 80px;
+      transition: all 0.1s linear;
+
+      &:hover {
+        .t-task3__footer-info--total-price p {
+          color: white;
+          background-color: @color-hover;
+          padding: 5px;
+        }
+      }
+    }
+
+    &__link {
+      position: relative;
+
+      &--img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      &--icon {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          to bottom,
+          rgba(100, 61, 15, 1) 0%,
+          rgba(100, 61, 15, 0) 100%
+        );
+        opacity: 0.4;
+        z-index: 1;
+      }
+    }
+
+    &__footer {
+      &-info {
         display: flex;
         gap: 15px;
-        padding-inline: 10px;
-        h1 {
-          font-size: 18px;
-          font-weight: 400;
-          text-align: left;
-          color: #000;
-        }
+        padding: 10px;
+
+        h1,
         p {
           font-size: 18px;
           font-weight: 400;
-          text-align: left;
-          color: #000;
+          color: @color-text;
         }
 
-        &.total-price {
-          margin: 5px 0 0 19px;
+        &--total-price {
+          margin-left: 19px;
           border-radius: 2px;
 
           p {
@@ -199,93 +176,118 @@
           }
         }
 
-        &.link {
+        &--link {
           h1 {
-            text-decoration-line: underline;
-            text-decoration-style: dashed;
-            text-decoration-color: #000;
+            text-decoration: dashed @color-text;
             cursor: pointer;
-            transition: all linear 0.1s;
+            transition: color 0.3s ease, text-decoration-color 0.3s ease;
 
             &:hover {
-              color: red;
-              text-decoration-color: red;
+              color: @color-hover;
+              text-decoration-color: @color-hover;
             }
           }
 
           p {
             display: flex;
             align-items: center;
-            justify-content: center;
             font-size: 12px;
             background: #c3b8a5;
             padding: 0 3px;
             border-radius: 2px;
-            vertical-align: baseline;
-            max-height: 20px;
           }
         }
       }
     }
   }
 
-  &__popup {
+  &-popup {
     position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
     height: 0;
     opacity: 0;
-    background-color: white;
-    top: 0;
-    z-index: -20;
     display: flex;
     flex-direction: column;
-    transform: translateY(400px);
-    transition: all linear 0.2s;
-    background: rgba(255, 255, 255, 0.696);
+    background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.3);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    transform: translateY(400px);
+    transition: all 0.3s ease;
 
-    &--items {
-      flex: 1;
-      padding: 10px;
-    }
-    &--item {
-      &--wrapper {
-        display: flex;
-        align-items: center;
-        border-bottom: 1px dotted #ccc;
-        cursor: pointer;
-        gap: 5px;
-
-        &:hover {
-          p {
-            color: blue;
-          }
-        }
-
-        & .price {
-          color: #999;
-          min-width: 50px;
-        }
-      }
-    }
-
-    &.open {
+    &--open {
       height: 100%;
-      // max-height: fit-content;
-      width: 100%;
       opacity: 1;
       transform: translateY(0);
       z-index: 9999;
     }
 
-    p {
-      color: #000;
+    &__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px;
     }
 
-    &--recalc {
-      margin: 0 20px 20px 20px;
+    &__close {
+      cursor: pointer;
+
+      &-icon {
+        font-size: 24px;
+        color: @color-text;
+        font-weight: bold;
+      }
+    }
+
+    &__title {
+      font-size: 24px;
+      font-weight: 900;
+      color: @color-text;
+    }
+
+    &__items {
+      flex: 1;
+      padding: 10px;
+    }
+
+    &__item {
+      display: flex;
+      align-items: center;
+      border-bottom: 1px dotted #ccc;
+      gap: 5px;
+      cursor: pointer;
+
+      &:hover p {
+        color: blue;
+      }
+    }
+    &__price {
+      color: #999;
+      min-width: 50px;
+    }
+    &__label {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: @color-text;
+
+      &--checkbox {
+        display: flex;
+      }
+
+      p {
+        display: flex;
+        align-items: center;
+        font-size: 16px;
+        border-radius: 2px;
+      }
+    }
+
+    &__recalc {
+      margin: 0 20px 20px;
       height: 35px;
       background-color: #44c200;
       color: white;
@@ -293,35 +295,9 @@
       border-radius: 10px;
       font-size: 14px;
       cursor: pointer;
-      transition: all linear 0.2s;
 
       &:hover {
         background-color: #50e201;
-      }
-    }
-
-    &--header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 10px 0 10px;
-      &--title {
-        color: #000;
-        font-weight: 900;
-        font-size: 24px;
-      }
-
-      &--close {
-        cursor: pointer;
-        width: 25px;
-        height: 25px;
-
-        & .close-icon {
-          font-size: 24px;
-          color: #000;
-          font-weight: bold;
-          line-height: 1;
-        }
       }
     }
   }

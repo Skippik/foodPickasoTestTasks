@@ -2,15 +2,15 @@
   <div class="t-task3-slider__item">
     <a href="" class="t-task3-slider__link">
       <img
-        class="t-task3-slider__img"
+        class="t-task3-slider__link--img"
         :src="`/images/${item.img}`"
         alt="Restaurant img" />
-      <i></i>
+      <i class="t-task3-slider__link--icon"></i>
     </a>
-    <div class="task3-slider__info">
-      <h3 class="task3-slider__title">{{ item.title }}</h3>
-      <p class="task3-slider__address">{{ item.address }}</p>
-      <p class="task3-slider__work-time">{{ item.workTime }}</p>
+    <div class="t-task3-slider__info">
+      <h3 class="t-task3-slider__title">{{ item.title }}</h3>
+      <p class="t-task3-slider__address">{{ item.address }}</p>
+      <p class="t-task3-slider__work-time">{{ item.workTime }}</p>
     </div>
     <div
       class="t-task3-slider__footer"
@@ -18,10 +18,10 @@
       :key="key">
       <div v-if="menuCategory.link">
         <div v-if="menuState[key]?.some(item => item.selected)">
-          <div v-for="menuItem in menuState[key]">
+          <div v-for="menuItem in menuState[key]" :key="menuItem.name">
             <div
               v-if="menuItem.selected"
-              class="t-task3__slider--footer--info link">
+              class="t-task3-slider__footer-info t-task3-slider__footer-info--link">
               <h1 @click="openPopup(key)">
                 {{ menuItem.name }}
               </h1>
@@ -30,69 +30,67 @@
           </div>
         </div>
         <div v-else>
-          <div class="t-task3__slider--footer--info link">
+          <div
+            class="t-task3-slider__footer-info t-task3-slider__footer-info--link">
             <h1 @click="openPopup(key)">Выбрать блюда</h1>
           </div>
         </div>
       </div>
       <div v-else>
-        <div class="t-task3__slider--footer--info not-link">
+        <div
+          class="t-task3-slider__footer-info t-task3-slider__footer-info--not-link">
           <h1>{{ menuCategory.data[0].name }}</h1>
         </div>
       </div>
     </div>
-    <div class="t-task3__popup" :class="state.open && 'open'">
-      <div class="t-task3__popup--header">
-        <h1 class="t-task3__popup--header--title">{{ state.popupTitle }}</h1>
-        <div @click="closePopup" class="t-task3__popup--header--close">
-          <span class="close-icon">×</span>
+    <div class="t-task3-popup" :class="{'t-task3-popup--open': state.open}">
+      <div class="t-task3-popup__header">
+        <h1 class="t-task3-popup__title">{{ state.popupTitle }}</h1>
+        <div @click="closePopup" class="t-task3-popup__close">
+          <span class="t-task3-popup__close-icon">×</span>
         </div>
       </div>
-      <div class="t-task3__popup--items">
+      <div class="t-task3-popup__items">
         <div
           v-for="item in menuState[state.popupCategory]"
           :key="item.name"
-          class="t-task3__popup--item">
-          <label
-            class="t-task3__popup--item--wrapper"
-            :for="`checkbox-${item.name}`">
-            <input
-              :id="`checkbox-${item.name}`"
-              @change="toggleSelection(item)"
-              type="checkbox"
-              v-model="item.selected" />
-
-            <p>{{ item.name }}</p>
-            <p class="price">{{ `${item.price.toFixed(2)} р` }}</p>
+          class="t-task3-popup__item">
+          <label class="t-task3-popup__label" :for="`checkbox-${item.name}`">
+            <div class="t-task3-popup__label--checkbox">
+              <input
+                :id="`checkbox-${item.name}`"
+                @change="toggleSelection(item)"
+                type="checkbox"
+                v-model="item.selected" />
+              <p>{{ item.name }}</p>
+            </div>
+            <p class="t-task3-popup__price">
+              {{ `${item.price.toFixed(2)} р` }}
+            </p>
           </label>
         </div>
       </div>
-      <button class="t-task3__popup--recalc" @click="recalculateTotalPrice">
+      <button class="t-task3-popup__recalc" @click="recalculateTotalPrice">
         Пересчитать цену обеда
       </button>
     </div>
     <div
-      class="t-task3__slider--footer--info total-price"
+      class="t-task3-slider__footer-info t-task3-slider__footer-info--total-price"
       v-if="item.totalPrice">
       <p>
         {{ `${item.totalPrice.toFixed(2)} р` }}
       </p>
     </div>
-    <div class="t-task3__slider--footer--info total-price" v-else>
+    <div
+      class="t-task3-slider__footer-info t-task3-slider__footer-info--total-price"
+      v-else>
       <p>{{ `${calcTotalPrice.toFixed(2)} р` }}</p>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  onMounted,
-  PropType,
-  reactive,
-  toRaw,
-} from 'vue';
+import {computed, defineComponent, onMounted, PropType, reactive} from 'vue';
 import {Restaurant} from '../../types';
 
 interface MenuItem {

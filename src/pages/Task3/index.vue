@@ -1,13 +1,11 @@
 <template>
   <div class="t-task3">
-    <div class="t-task3__header">
-      <button @click="goBack" class="t-task3__header-btn t-btn">
-        <img
-          src="../../assets/icons/back.svg"
-          alt="Go back"
-          class="t-task3__header-icon" />
+    <div class="t-header">
+      <button @click="goBack" class="t-header--btn t-btn">
+        <img src="../../assets/icons/back.svg" alt="Go back" class="icon" />
       </button>
-      <h1 class="t-task3__header-title t-title">Task #3</h1>
+
+      <h1 class="t-header--title t-title">Task #3</h1>
     </div>
     <div class="t-task3__wrapper">
       <div class="t-task3__info">
@@ -58,13 +56,13 @@
           <MenuItem :item="item" />
         </swiper-slide>
       </swiper>
-      <div ref="prev" class="t-task3__slider-btn t-task3__slider-btn--prev">
+      <div ref="prev" class="t-task3-slider-btn prev">
         <img
           src="../../assets/icons/arrow.svg"
           alt="Go back"
           class="t-task3__slider-btn-icon" />
       </div>
-      <div ref="next" class="t-task3__slider-btn t-task3__slider-btn--next">
+      <div ref="next" class="t-task3-slider-btn next">
         <img
           src="../../assets/icons/arrow.svg"
           alt="Go back"
